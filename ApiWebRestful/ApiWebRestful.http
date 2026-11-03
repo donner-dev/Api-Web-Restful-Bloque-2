@@ -1,0 +1,6 @@
+@ApiWebRestful_HostAddress = http://localhost:5038
+
+GET {{ApiWebRestful_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
