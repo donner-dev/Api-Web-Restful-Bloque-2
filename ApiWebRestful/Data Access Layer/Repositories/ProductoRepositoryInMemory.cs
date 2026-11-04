@@ -5,20 +5,20 @@ using System.Text;
 
 namespace ApiWebRestful.Data_Access_Layer.Repositories {
   public class ProductoRepositoryInMemory : IProductoRepository {
-
-    private List<Producto> productlist;  
-    //private asi solo la tocan los metodos de esta clase (q igual es default en las clases ahre)
-    
-    public ProductoRepositoryInMemory() {  //constructor: no tiene tipo devuelto y se llama igual q la clase 
-
-      //seed data
-      //en este mundo ideal de seed data, los productos son bien baratos y no existe la inflacion <3 
-      productlist = new List<Producto> { //inicializo, nueva instancia de lista prod, y nesteo inicializar 4 New Product
+     //con una BD los datos tan fuera del programa. necesito hacerlo static y fuera del constructor asi existe independientemente de las instancias y solo pa la clase en sí.
+     private static List<Producto> productlist = new List<Producto> { //inicializo, nueva instancia de lista prod, y nesteo inicializar 4 New Product
         new Producto { Id = 1, Nombre = "Jabón", Precio = 10.99m, Categoria = "Limpieza", Activo = true},
         new Producto { Id = 2, Nombre = "Arvejas", Precio = 5.99m, Categoria = "Alimentos", Activo = true},
         new Producto { Id = 3, Nombre = "Leche Proteica", Precio = 8.50m, Categoria = "Alimentos", Activo = true},
         new Producto { Id = 4, Nombre = "Detergente", Precio = 4.75m, Categoria = "Limpieza", Activo = false},
-      }; 
+      };
+  //private asi solo la tocan los metodos de esta clase (q igual es default en las clases ahre)
+
+  public ProductoRepositoryInMemory() {  //constructor: no tiene tipo devuelto y se llama igual q la clase 
+
+      //seed data
+      //en este mundo ideal de seed data, los productos son bien baratos y no existe la inflacion <3 
+     
 
     }
 

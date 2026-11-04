@@ -26,9 +26,7 @@ namespace ApiWebRestful.Presentation_Layer.Controllers {
     [HttpGet]
     public IActionResult ObtenerTodos() {
       var products = _prodService.ObtenerTodos();
-      if (products == null || products.Count == 0) {
-        return NotFound(new { Message = "No se encontraron productos" });
-      }
+
       return Ok(products);
     }
 
@@ -58,32 +56,28 @@ namespace ApiWebRestful.Presentation_Layer.Controllers {
 
       var nuevoproducto = _prodService.Agregar(createproductodto);
       return CreatedAtAction(nameof(ObtenerPorId), new { id = nuevoproducto.Id }, nuevoproducto);
+      //responde 201 Created, "se creo" y le tira donde encontrar lo que creó.
+      //nameof(ObtenerPorId) = la direccion del producto es la que sirve ese método
+      // que usa el id del tercer argumento. 
+      //nuevoproducto es el cuerpo de respuesta, el producto que se creó.
     }
-    
-    
+
+
 
 
 
     // PUT api/productos/5
     [HttpPut("{id:int}")]
-    //put tmb tiene que recibir CreateProductoDto porque el id no se lo pasan, y el activo tampoco, solo lo que viene de afuera. El service le asigna el id y el activo por default.
-    public IActionResult ActualizarPorId(int id, [FromBody] CreateProductoDto updateproductodto) {
+     public IActionResult ActualizarPorId(int id, [FromBody] CreateProductoDto updateproductodto) {
       if (updateproductodto == null) {
         return BadRequest();
       }
 
-      var existingProduct = _prodService.ObtenerPorId(id);
-      if (existingProduct == null) {
+      var updatedProduct = _prodService.ActualizarPorId(id, updateproductodto);
+      if (updatedProduct == null) {
         return NotFound(new { Message = $"Producto con ID {id} no encontrado" });
       }
-
-      // Actualizar las propiedades del producto existente
-      existingProduct.Nombre = updateproductodto.Nombre;
-      existingProduct.Precio = updateproductodto.Precio;
-      existingProduct.Categoria = updateproductodto.Categoria;
-
-      _prodService.ActualizarPorId(existingProduct.Id, existingProduct);
-      return Ok(existingProduct);
+      return Ok(updatedProduct);
     }
 
 
